@@ -49,6 +49,7 @@
     <modules>
         <module>srcdeps-core</module>
         <module>srcdeps-maven-plugin</module>
+        <module>srcdeps-local-repository</module>
     </modules>
 
     <scm>
