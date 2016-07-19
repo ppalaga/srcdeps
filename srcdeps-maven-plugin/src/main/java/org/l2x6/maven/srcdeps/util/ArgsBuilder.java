@@ -23,17 +23,17 @@ import java.util.Set;
 
 import org.apache.maven.execution.MavenSession;
 import org.codehaus.plexus.logging.Logger;
-import org.l2x6.maven.srcdeps.config.SrcdepsConfiguration;
 import org.l2x6.maven.srcdeps.config.SrcdepsConfiguration.Element;
+import org.l2x6.srcdeps.core.config.Configuration;
 
 public class ArgsBuilder {
     private final StringBuilder builder = new StringBuilder();
-    private final SrcdepsConfig configuration;
+    private final Configuration configuration;
     private final PropsEvaluator evaluator;
     private final Logger logger;
     private final MavenSession session;
 
-    public ArgsBuilder(SrcdepsConfig configuration, MavenSession session, PropsEvaluator evaluator,
+    public ArgsBuilder(Configuration configuration, MavenSession session, PropsEvaluator evaluator,
             Logger logger) {
         super();
         this.configuration = configuration;
@@ -85,9 +85,6 @@ public class ArgsBuilder {
             }
         }
 
-        if (configuration.isMavenTestSkip()) {
-            property("maven.test.skip", String.valueOf(configuration.isMavenTestSkip()));
-        }
         if (configuration.isSkipTests()) {
             property("skipTests", String.valueOf(configuration.isSkipTests()));
         }

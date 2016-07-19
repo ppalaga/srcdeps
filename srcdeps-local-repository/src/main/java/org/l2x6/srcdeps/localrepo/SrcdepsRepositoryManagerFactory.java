@@ -18,7 +18,9 @@ package org.l2x6.srcdeps.localrepo;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
 
+import org.apache.maven.execution.MavenSession;
 import org.eclipse.aether.RepositorySystemSession;
 import org.eclipse.aether.repository.LocalRepository;
 import org.eclipse.aether.repository.LocalRepositoryManager;
@@ -38,6 +40,10 @@ public class SrcdepsRepositoryManagerFactory implements LocalRepositoryManagerFa
     @Inject
     private BuildService buildService;
 
+
+    @Inject
+    private Provider<MavenSession> sessionProvider;
+
     public SrcdepsRepositoryManagerFactory() {
         log.info("====== SrcdepsRepositoryManagerFactory");
     }
@@ -46,7 +52,8 @@ public class SrcdepsRepositoryManagerFactory implements LocalRepositoryManagerFa
     public LocalRepositoryManager newInstance(RepositorySystemSession session, LocalRepository repository)
             throws NoLocalRepositoryManagerException {
         LocalRepositoryManagerFactory delegate = factories.getDelegate();
-        return new SrcdepsRepositoryManager(delegate.newInstance(session, repository), buildService);
+
+        return new SrcdepsRepositoryManager(delegate.newInstance(session, repository), sessionProvider, buildService);
     }
 
     @Override

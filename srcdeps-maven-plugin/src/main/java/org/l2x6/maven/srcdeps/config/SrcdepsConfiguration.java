@@ -34,6 +34,7 @@ import org.l2x6.maven.srcdeps.util.Optional;
 import org.l2x6.maven.srcdeps.util.PropsEvaluator;
 import org.l2x6.maven.srcdeps.util.Supplier;
 import org.l2x6.srcdeps.core.BuildRequest.Verbosity;
+import org.l2x6.srcdeps.core.config.Configuration;
 import org.l2x6.srcdeps.core.shell.IoRedirects;
 
 public class SrcdepsConfiguration {
@@ -84,7 +85,7 @@ public class SrcdepsConfiguration {
 
         }
 
-        public SrcdepsConfig build() {
+        public Configuration build() {
 
             final boolean failOnMissingRepository = Optional
                     .ofNullable(dom.getChild(Element.failOnMissingRepository.name())).map(Mapper.NODE_VALUE)
@@ -156,8 +157,8 @@ public class SrcdepsConfiguration {
                 }
             }
 
-            return new SrcdepsConfig(Collections.unmodifiableList(repos),
-                    sourcesDirectory, mavenHome, javaHome, scmPluginVersion, skipTests, mavenTestSkip, skip,
+            return new Configuration(Collections.unmodifiableList(repos),
+                    sourcesDirectory, skipTests, mavenTestSkip, skip,
                     Verbosity.fastValueOf(verbosity), redirects, forwardProperties, failWithProfiles);
         }
 

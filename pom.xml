@@ -117,6 +117,7 @@
 
         <!-- dependencies -->
         <version.org.eclipse.jgit>4.1.0.201509280440-r</version.org.eclipse.jgit>
+        <version.org.apache.maven>3.3.9</version.org.apache.maven>
         <version.junit>4.12</version.junit>
         <version.org.slf4j>1.7.5</version.org.slf4j>
         <version.org.snakeyaml>1.17</version.org.snakeyaml>
@@ -169,6 +170,12 @@
             </dependency>
 
             <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-core</artifactId>
+                <version>${version.org.apache.maven}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.eclipse.jgit</groupId>
                 <artifactId>org.eclipse.jgit</artifactId>
                 <version>${version.org.eclipse.jgit}</version>
@@ -177,6 +184,11 @@
             <dependency>
                 <groupId>org.l2x6.maven.srcdeps</groupId>
                 <artifactId>srcdeps-core</artifactId>
+                <version>0.0.12-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.l2x6.maven.srcdeps</groupId>
+                <artifactId>srcdeps-config-yaml</artifactId>
                 <version>0.0.12-SNAPSHOT</version>
             </dependency>
 

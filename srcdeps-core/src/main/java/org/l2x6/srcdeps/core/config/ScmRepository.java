@@ -17,107 +17,52 @@
 package org.l2x6.srcdeps.core.config;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-
-import org.l2x6.srcdeps.core.config.SrcdepsConfig.BuilderIoProperty;
-import org.l2x6.srcdeps.core.config.SrcdepsConfig.Property;
 
 public class ScmRepository {
 
-    public interface PropertyVisitor {
-        void accept(SrcdepsRepositoryBuilder builder, Object value) throws SrcdepsConfigException;
-    }
-
-    public enum ScmRepositoryProperty implements PropertyVisitor {
-        buildArguments {
-            @Override
-            public void accept(SrcdepsRepositoryBuilder builder, Object value) throws SrcdepsConfigException {
-                // TODO Auto-generated method stub
-
-            }
-        },
-        selectors {
-            @Override
-            public void accept(SrcdepsRepositoryBuilder builder, Object value) throws SrcdepsConfigException {
-                // TODO Auto-generated method stub
-
-            }
-        },
-        urls {
-            @Override
-            public void accept(SrcdepsRepositoryBuilder builder, Object value) throws SrcdepsConfigException {
-                // TODO Auto-generated method stub
-
-            }
-        };
-
-        public static List<ScmRepository> acceptAll(Map<String, Object> map) throws SrcdepsConfigException {
-            List<ScmRepository> result = new ArrayList<>();
-            for (Map.Entry<String, Object> repo : map.entrySet()) {
-                String repoId = repo.getKey();
-                SrcdepsRepositoryBuilder builder = ScmRepository.builder().id(repoId);
-                Map<String, Object> repoFields = SrcdepsConfig.cast(repoId, repo.getValue(), Map.class);
-                for (Map.Entry<String, Object> repoField : repoFields.entrySet()) {
-                    String key = repoField.getKey();
-                    try {
-                        ScmRepositoryProperty p = ScmRepositoryProperty.valueOf(key);
-                        p.accept(builder, repoField.getValue());
-                    } catch (IllegalArgumentException e) {
-                        throw new SrcdepsConfigException(String.format("Invalid property name [%s] of repository [%s]; expected: [%s]",
-                                key, repoId, Arrays.toString(BuilderIoProperty.values())));
-                    }
-                }
-                result.add(builder.build());
-            }
-            return result;
-        }
-
-    }
-
-    public static class SrcdepsRepositoryBuilder {
-
-        private SrcdepsRepositoryBuilder() {
-        }
+    public static class Builder {
 
         private List<String> buildArguments = new ArrayList<>();
+
         private String id;
         private List<String> selectors = new ArrayList<>();
         private Collection<String> urls = new LinkedHashSet<String>();
+        public Builder() {
+        }
 
         public ScmRepository build() {
             return new ScmRepository(id, Collections.unmodifiableList(selectors),
                     Collections.unmodifiableCollection(urls), Collections.unmodifiableList(buildArguments));
         }
 
-        public SrcdepsRepositoryBuilder buildArgument(String buildArgument) {
-            this.buildArguments.add(buildArgument);
+        public Builder buildArguments(List<String> buildArgument) {
+            this.buildArguments.addAll(buildArgument);
             return this;
         }
 
-        public SrcdepsRepositoryBuilder id(String id) {
+        public Builder id(String id) {
             this.id = id;
             return this;
         }
 
-        public SrcdepsRepositoryBuilder selectors(String selector) {
+        public Builder selectors(String selector) {
             this.selectors.add(selector);
             return this;
         }
 
-        public SrcdepsRepositoryBuilder urls(String url) {
+        public Builder urls(String url) {
             this.urls.add(url);
             return this;
         }
 
     }
 
-    public static SrcdepsRepositoryBuilder builder() {
-        return new SrcdepsRepositoryBuilder();
+    public static Builder builder() {
+        return new Builder();
     }
 
     private final List<String> buildArguments;
@@ -125,7 +70,7 @@ public class ScmRepository {
     private final List<String> selectors;
     private final Collection<String> urls;
 
-    protected ScmRepository(String id, List<String> selectors, Collection<String> urls, List<String> buildArgs) {
+    private ScmRepository(String id, List<String> selectors, Collection<String> urls, List<String> buildArgs) {
         super();
         this.id = id;
         this.selectors = selectors;
@@ -147,6 +92,12 @@ public class ScmRepository {
 
     public Collection<String> getUrls() {
         return urls;
+    }
+
+    @Override
+    public String toString() {
+        return "ScmRepository [id=" + id + ", urls=" + urls + ", selectors=" + selectors + ", buildArguments="
+                + buildArguments + "]";
     }
 
 }
