@@ -50,6 +50,7 @@
         <module>srcdeps-core</module>
         <module>srcdeps-maven-plugin</module>
         <module>srcdeps-local-repository</module>
+        <module>srcdeps-config-yaml</module>
     </modules>
 
     <scm>
@@ -118,6 +119,7 @@
         <version.org.eclipse.jgit>4.1.0.201509280440-r</version.org.eclipse.jgit>
         <version.junit>4.12</version.junit>
         <version.org.slf4j>1.7.5</version.org.slf4j>
+        <version.org.snakeyaml>1.17</version.org.snakeyaml>
 
         <!--
           Maven plugin versions

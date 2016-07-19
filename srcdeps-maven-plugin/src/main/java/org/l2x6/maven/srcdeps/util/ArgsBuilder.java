@@ -28,12 +28,12 @@ import org.l2x6.maven.srcdeps.config.SrcdepsConfiguration.Element;
 
 public class ArgsBuilder {
     private final StringBuilder builder = new StringBuilder();
-    private final SrcdepsConfiguration configuration;
+    private final SrcdepsConfig configuration;
     private final PropsEvaluator evaluator;
     private final Logger logger;
     private final MavenSession session;
 
-    public ArgsBuilder(SrcdepsConfiguration configuration, MavenSession session, PropsEvaluator evaluator,
+    public ArgsBuilder(SrcdepsConfig configuration, MavenSession session, PropsEvaluator evaluator,
             Logger logger) {
         super();
         this.configuration = configuration;

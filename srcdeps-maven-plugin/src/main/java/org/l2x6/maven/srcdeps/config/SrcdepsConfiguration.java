@@ -84,7 +84,7 @@ public class SrcdepsConfiguration {
 
         }
 
-        public SrcdepsConfiguration build() {
+        public SrcdepsConfig build() {
 
             final boolean failOnMissingRepository = Optional
                     .ofNullable(dom.getChild(Element.failOnMissingRepository.name())).map(Mapper.NODE_VALUE)
@@ -156,7 +156,7 @@ public class SrcdepsConfiguration {
                 }
             }
 
-            return new SrcdepsConfiguration(Collections.unmodifiableList(repos), failOnMissingRepository,
+            return new SrcdepsConfig(Collections.unmodifiableList(repos),
                     sourcesDirectory, mavenHome, javaHome, scmPluginVersion, skipTests, mavenTestSkip, skip,
                     Verbosity.fastValueOf(verbosity), redirects, forwardProperties, failWithProfiles);
         }
@@ -205,27 +205,21 @@ public class SrcdepsConfiguration {
         }
     }
 
-    private final boolean failOnMissingRepository;
     private final Set<String> failWithProfiles;
     private final Set<String> forwardProperties;
-    private final File javaHome;
-    private final File mavenHome;
-    private final boolean mavenTestSkip;
     private final IoRedirects redirects;
     private final List<SrcdepsRepository> repositories;
-    private final String scmPluginVersion;
     private final boolean skip;
     private final boolean skipTests;
     private final File sourcesDirectory;
     private final Verbosity verbosity;
 
-    private SrcdepsConfiguration(List<SrcdepsRepository> repositories, boolean failOnMissingRepository,
+    private SrcdepsConfiguration(List<SrcdepsRepository> repositories,
             File sourcesDirectory, File mavenHome, File javaHome, String scmPluginVersion, boolean skipTests,
             boolean mavenTestSkip, boolean skip, Verbosity verbosity, IoRedirects redirects,
             Set<String> forwardProperties, Set<String> failWithProfiles) {
         super();
         this.repositories = repositories;
-        this.failOnMissingRepository = failOnMissingRepository;
         this.sourcesDirectory = sourcesDirectory;
         this.mavenHome = mavenHome;
         this.javaHome = javaHome;
